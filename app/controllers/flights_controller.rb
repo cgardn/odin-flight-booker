@@ -11,12 +11,13 @@ class FlightsController < ApplicationController
 
     if params[:date]
       @date = params[:date]
-      #day = Time.strptime(params[:search][:date], "%m-%d-%Y").day
       day = Time.strptime(params[:date], "%m-%d-%Y").day
       allflights = Flight.all
 
       @flights = allflights.filter{ |f| (f.departure_time.day == day) }
-      #@flights = allflights
+      @flights.filter!{ |f| (
+        f.from_airport_id == params[:origin].to_i &&
+        f.to_airport_id == params[:destination].to_i) }
       
       @flights.each do |f|
         dep = @airportcodes[f.from_airport_id-1][0]

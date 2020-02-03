@@ -1,16 +1,16 @@
 <%= form_with(url: "/flights", method: "get", local: true) do |f| %>
 
   <%= f.label "Origin: " %>
-  <%= f.select :origin, options_for_select(@airportcodes) %>
+  <%= f.select :origin, options_for_select(@airportcodes, selected: params[:origin]) %>
 
   <%= f.label "Destination: " %>
-  <%= f.select :destination, options_for_select(@airportcodes) %>
+  <%= f.select :destination, options_for_select(@airportcodes, selected: params[:destination]) %>
 
   <%= f.label "Passengers: " %>
-  <%= f.select :passengers, options_for_select([[1,1],[2,2],[3,3],[4,4]]) %>
+  <%= f.select :passengers, options_for_select([[1,1],[2,2],[3,3],[4,4]], selected: params[:passengers]) %>
 
   <%= f.label "Date: " %>
-  <%= f.select :date, options_for_select(@dates) %>
+  <%= f.select :date, options_for_select(@dates, selected: params[:date]) %>
 
   <%= f.submit "Submit", name: nil %>
 <% end %>
@@ -20,8 +20,10 @@
   <div>
     <br>Showing flights for: <%= @date %><br><br>
   <% @flights.each do |f| %>
-    <span><%= @airportcodes[f.from_airport_id-1][0] %> @ <%=f.departure_time.strftime("%I:%M") %> ->
-      <%= @airportcodes[f.to_airport_id-1][0] %> @ <%= f.arrival_time.strftime("%I:%M") %>
+    <span>
+      <%= @airportcodes[f.from_airport_id-1][0] %> @ <%=f.departure_time.strftime("%I:%M") %> ->
+      <%= @airportcodes[f.to_airport_id-1][0] %> @ <%= f.arrival_time.strftime("%I:%M") %> | 
+      id: <%= f.id %>
     </span><br>
   <% end %>
   </div>
