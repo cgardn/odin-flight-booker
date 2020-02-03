@@ -1,0 +1,28 @@
+<%= form_with url: '/flights', method: :get do |f| %>
+  <%= fields_for :search do |s| %>
+  <%= s.label "Origin: " %>
+  <%= s.select :origin, options_for_select(@airportcodes) %>
+
+  <%= s.label "Destination: "%>
+  <%= s.select :destination, options_for_select(@airportcodes) %>
+
+  <%= s.label "Passengers: " %>
+  <%= s.select :passengers, options_for_select([[1,1],[2,2],[3,3],[4,4]]) %>
+
+  <%= s.label "Date: " %>
+  <%= s.select :date, options_for_select(@dates) %>
+<% end %>
+
+  <%= f.submit "Submit" %>
+<% end %>
+
+<% if !@flights.nil? %>
+  <div>
+    Here's some text so I know it's working
+  <% @flights.each do |f| %>
+    <span><%= @airportcodes[f.from_airport_id-1][0] %> @ <%=f.departure_time.strftime("%I:%M") %> -\>
+      <%= @airportcodes[f.to_airport_id-1][0] %> @ <%= f.arrival_time.strftime("%I:%M") %>
+    </span><br>
+  <% end %>
+  </div>
+<% end %>
