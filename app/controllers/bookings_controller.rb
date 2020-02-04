@@ -2,13 +2,9 @@ class BookingsController < ApplicationController
 
   def new
     @booking = Booking.new
-    @booking.flight = bookingparams[:flight_id]
-    if @booking.save
-      redirect_to @booking
-    else
-      flash[:warning] = "Problem with booking"
-      redirect_back(fallback_location: root_url)
-    end
+    #@booking.flight = Flight.find(params[:booking][:flightid])
+    @booking.flight = Flight.find(bookingparams[:flightid])
+    @passengercount = bookingparams[:passengercount]
   end
 
   def show
@@ -16,7 +12,7 @@ class BookingsController < ApplicationController
 
   private
     def bookingparams
-      params.require(:booking).permit(:flight_id, :passengercount)
+      params.require(:booking).permit(:flightid, :passengercount)
     end
 
 end

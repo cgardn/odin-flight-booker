@@ -20,12 +20,14 @@
   <div>
     <br>Showing flights for: <%= @date %><br><br>
     <%= form_with(url: "/bookings/new", method: "get", local: true) do |flightform| %>
-      <%= flightform.hidden_field(:passengercount, value: params[:passengers]) %>
-      <% @flights.each do |f| %>
-        <span>
-        <%= flightform.radio_button(:flightid, f.id) %>
-        <%= flightform.label(:flightid, "#{@airportcodes[f.from_airport_id-1][0]} @ #{f.departure_time.strftime("%I:%M")} -> #{@airportcodes[f.to_airport_id-1][0]} @ #{f.arrival_time.strftime("%I:%M")} | id: #{f.id}") %>
-        </span><br>
+      <%= fields_for :booking do |b| %>
+        <%= b.hidden_field(:passengercount, value: params[:passengers]) %>
+        <% @flights.each do |f| %>
+          <span>
+          <%= b.radio_button(:flightid, f.id) %>
+          <%= b.label(:flightid, "#{@airportcodes[f.from_airport_id-1][0]} @ #{f.departure_time.strftime("%I:%M")} -> #{@airportcodes[f.to_airport_id-1][0]} @ #{f.arrival_time.strftime("%I:%M")} | id: #{f.id}") %>
+          </span><br>
+        <% end %>
       <% end %>
       <%= flightform.submit "Select Flight", name: nil %>
     <% end %>
