@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   root to: redirect('/flights')
   get '/flights', to: 'flights#index'
+  get '/bookings/new', to: 'bookings#new'
+  get '/bookings/:id', to: 'bookings#show'
 
 end
