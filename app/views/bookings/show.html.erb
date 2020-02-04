@@ -1,1 +1,11 @@
-<%= form_with @booking %>
+Booking id: <%= @booking.id %><br>
+Departs: 
+<%= @booking.flight.from_airport.code %> at
+<%= @booking.flight.departure_time %><br>
+Arrives:
+<%= @booking.flight.to_airport.code %> at 
+<%= @booking.flight.arrival_time %><br><br>
+Passengers:<br>---<br><br>
+<% @booking.passengers.each do |p| %>
+  <%= p.name %> : <%= p.email %><br>
+<% end %>

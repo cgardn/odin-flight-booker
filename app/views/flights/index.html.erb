@@ -20,7 +20,7 @@
   <div>
     <br>Showing flights for: <%= @date %><br><br>
     <%= form_with(url: "/bookings/new", method: "get", local: true) do |flightform| %>
-      <%= fields_for :booking do |b| %>
+      <%= fields_for :booking_form do |b| %>
         <%= b.hidden_field(:passengercount, value: params[:passengers]) %>
         <% @flights.each do |f| %>
           <span>
