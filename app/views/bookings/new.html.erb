@@ -1,5 +1,23 @@
-<%= @passengercount %>
-<%= @booking.flight.to_airport.code %>
-<%= @booking.flight.departure_time %>
+Depart: <%= @booking.flight.from_airport.code %> @ 
+<%= @booking.flight.departure_time %><br>
+Arrive: 
+<%= @booking.flight.to_airport.code %> @ 
+<%= @booking.flight.arrival_time %><br><br>
+Please enter information for your <%= @booking.passengers.each.count %>
+passengers:<br><br>
 
 <!-- Here is where the forms for passenger information go -->
+<%= form_with model: @booking do |bForm| %>
+  <%= bForm.hidden_field(:flight, value: @booking.flight) %>
+  <% @booking.passengers.each.count.times do |n| %>
+    <%= fields_for ("passenger_"+n.to_s).to_sym do |pForm| %>
+      <%= pForm.label :name %>
+      <%= pForm.text_field :name %>
+      <br>
+      <%= pForm.label :email %>
+      <%= pForm.email_field :email %>
+      <br><br>
+    <% end %>
+  <% end %>
+  <%= bForm.submit "Submit Passenger Information" %>
+<% end %>

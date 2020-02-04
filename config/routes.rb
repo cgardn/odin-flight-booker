@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   get '/flights', to: 'flights#index'
   get '/bookings/new', to: 'bookings#new'
   get '/bookings/:id', to: 'bookings#show'
+  resources :bookings
+  resources :passengers
 
 end
