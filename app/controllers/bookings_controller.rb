@@ -15,7 +15,9 @@ class BookingsController < ApplicationController
     
     # feels hacky, having to index the attribute hash, but whatevs?
     booking_params[:passengers_attributes].each do |p|
+      # p[1] is the hash of {name: name, email: email}
       @booking.passengers.build(p[1])
+      PassengerMailer.with(passenger: p[1]).thank_you.deliver_later
     end
 
     if @booking.save
